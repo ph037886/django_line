@@ -11,6 +11,7 @@ class MemberInfo(models.Model):
     graduate_year = models.IntegerField(null=True, blank=True, db_index=True) #畢業年
     is_blocked = models.BooleanField(default=False) #是否封鎖，封鎖就不傳送，預設否
     created_at = models.DateTimeField(auto_now_add=True) #資料建立時間
+    line_display_name = models.CharField(max_length=100, blank=True) #line顯示名稱
 
     def __str__(self):
         return self.line_id
