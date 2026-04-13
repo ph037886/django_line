@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>徵才資料填寫</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h2>徵才資料填寫</h2>
+
+  <p id="status">LIFF 載入中...</p>
+
+  <form id="register-form" style="display:none;">
+    <div>
+      <label>電話：</label>
+      <input type="text" id="phone" name="phone" />
+    </div>
+    <div>
+      <label>Email：</label>
+      <input type="email" id="email" name="email" />
+    </div>
+    <div>
+      <label>畢業年：</label>
+      <input type="number" id="graduate_year" name="graduate_year" />
+    </div>
+    <button type="submit">送出</button>
+  </form>
+
+  <script>
+    const LIFF_ID = "2009788828-lKbaqlwM";
+
+    async function main() {
+      try {
+        await liff.init({ liffId: LIFF_ID });
+
+        if (!liff.isLoggedIn()) {
+          liff.login();
+          return;
+        }
+
+        const profile = await liff.getProfile();
+        document.getElementById("status").innerText =
+          "已登入 LINE，userId: " + profile.userId;
+
+        document.getElementById("register-form").style.display = "block";
+
+        document.getElementById("register-form").addEventListener("submit", async function(e) {
+          e.preventDefault();
+
+          const payload = {
+            line_id: profile.userId,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            graduate_year: document.getElementById("graduate_year").value
+          };
+
+          const res = await fetch("/api/member/register/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await res.json();
+          alert(data.message || "送出完成");
+
+          if (liff.isInClient()) {
+            liff.closeWindow();
+          }
+        });
+      } catch (err) {
+        document.getElementById("status").innerText = "LIFF 初始化失敗：" + err;
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>

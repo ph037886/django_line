@@ -9,42 +9,46 @@ from django.conf import settings
 
 from .models import MemberInfo
 
+
+def liff_register_page(request):
+    return render(request, "bot/liff_register.html")
+
 @csrf_exempt
-def line_webhook(request):
+def member_register_api(request):
     if request.method != "POST":
         return HttpResponseBadRequest("Invalid method")
 
-    body = request.body
-
     try:
-        payload = json.loads(body.decode("utf-8"))
-    except:
+        payload = json.loads(request.body.decode("utf-8"))
+    except json.JSONDecodeError:
         return HttpResponseBadRequest("Invalid JSON")
 
-    events = payload.get("events", [])
+    line_id = payload.get("line_id")
+    phone = payload.get("phone", "").strip()
+    email = payload.get("email", "").strip()
+    graduate_year = payload.get("graduate_year")
 
-    for event in events:
-        event_type = event.get("type")
+    if not line_id:
+        return HttpResponseBadRequest("Missing line_id")
 
-        # ✅ 重點：follow event
-        if event_type == "follow":
-            user_id = event["source"]["userId"]
+    graduate_year_value = None
+    if graduate_year not in [None, ""]:
+        try:
+            graduate_year_value = int(graduate_year)
+        except ValueError:
+            return HttpResponseBadRequest("graduate_year must be integer")
 
-            print("New follow:", user_id)
+    MemberInfo.objects.update_or_create(
+        line_id=line_id,
+        defaults={
+            "phone": phone,
+            "email": email,
+            "graduate_year": graduate_year_value,
+            "is_blocked": False,
+        }
+    )
 
-            MemberInfo.objects.update_or_create(
-                line_id=user_id,
-                defaults={
-                    "is_blocked": False
-                }
-            )
-
-        # 🔁 block / unfollow
-        if event_type == "unfollow":
-            user_id = event["source"]["userId"]
-
-            MemberInfo.objects.filter(line_id=user_id).update(
-                is_blocked=True
-            )
-
-    return JsonResponse({"status": "ok"})
+    return JsonResponse({
+        "status": "ok",
+        "message": "資料已儲存"
+    })

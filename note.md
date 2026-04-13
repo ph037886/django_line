@@ -1,7 +1,7 @@
 # 開發的筆記
 
 ### 常用cmd語法
-啟動環境 C:\python\env\django_work\Scripts\activate.py
+啟動環境 C:\python\env\django_work\Scripts\activate.bat
 cd django_line
 
 ### 啟動網頁
