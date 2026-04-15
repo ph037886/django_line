@@ -1,41 +1,238 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>徵才資料填寫</title>
+  <title>國軍左營徵才資料填寫</title>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 14px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 24px 22px 18px;
+      background: linear-gradient(135deg, #0f4c81, #2563eb);
+      color: #ffffff;
+    }
+
+    .card-header h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.3;
+    }
+
+    .card-header p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.95;
+    }
+
+    .card-body {
+      padding: 22px;
+    }
+
+    .status {
+      margin-bottom: 16px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 46px;
+      padding: 10px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+      background: #fff;
+    }
+
+    .form-input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid #dbe3ef;
+      border-radius: 12px;
+      background: #f8fbff;
+      margin-bottom: 18px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      margin-top: 3px;
+      transform: scale(1.2);
+    }
+
+    .checkbox-group label {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #374151;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .submit-btn:disabled {
+      background: #93c5fd;
+      cursor: not-allowed;
+    }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    .success-message,
+    .error-message {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.6;
+      display: none;
+    }
+
+    .success-message {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .error-message {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      display: block;
+      margin-bottom: 12px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 6px;
+    }
+  </style>
 </head>
 <body>
-  <h2>徵才資料填寫</h2>
+  <div class="page">
+    <div class="card">
+      <div class="card-header">
+        <img src="{% static 'images/logo.png' %}" alt="logo" class="logo">
+        <h1>國軍左營總醫院 臨床藥劑科</h1>
+        <h2>國軍左營總醫院 臨床藥劑科徵才資料填寫</h2>
+        <p>請填寫以下基本資料，以便接收後續徵才資訊。</p>
+      </div>
 
-  <p id="status">LIFF 載入中...</p>
+      <div class="card-body">
 
-  <form id="register-form" style="display:none;">
-    <div>
-      <label>姓名：</label>
-      <input type="text" id="name" name="name" />
+        <form id="register-form" style="display;">
+          <div class="form-group">
+            <label class="form-label" for="name">姓名 *</label>
+            <input class="form-input" type="text" id="name" name="name" placeholder="請輸入姓名" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="phone">電話 *</label>
+            <input class="form-input" type="text" id="phone" name="phone" placeholder="請輸入手機或聯絡電話" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">E-mail *</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="請輸入 E-mail" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="graduate_year">畢業年 * (西元年，如2026)</label>
+            <input class="form-input" type="number" id="graduate_year" name="graduate_year" placeholder="例如 2026" required />
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="consent_recruitment" name="consent_recruitment" checked required />
+            <label for="consent_recruitment">
+              我同意接收徵才、招募活動等相關資訊。
+            </label>
+          </div>
+
+          <button id="submit-btn" class="submit-btn" type="submit">送出資料</button>
+
+          <div id="success-message" class="success-message"></div>
+          <div id="error-message" class="error-message"></div>
+
+          <div class="hint">
+            若資料需要更新，可重新開啟此頁面再次填寫。
+          </div>
+        </form>
+      </div>
     </div>
-    <div>
-      <label>電話：</label>
-      <input type="text" id="phone" name="phone" />
-    </div>
-    <div>
-      <label>Email：</label>
-      <input type="email" id="email" name="email" />
-    </div>
-    <div>
-      <label>畢業年：</label>
-      <input type="number" id="graduate_year" name="graduate_year" />
-    </div>
-    <div>
-  <label>
-    <input type="checkbox" id="consent_recruitment" name="consent_recruitment" checked>
-    我同意接收徵才相關資訊
-  </label>
-</div>
-    <button type="submit">送出</button>
-  </form>
+  </div>
 
   <script>
     const LIFF_ID = "2009788828-lKbaqlwM";
@@ -50,23 +247,36 @@
         }
 
         const profile = await liff.getProfile();
-        document.getElementById("status").innerText =
-          "已登入 LINE，userId: " + profile.userId;
+        const statusEl = document.getElementById("status")
+        const formEl = document.getElementById("register-form");
+        const submitBtn = document.getElementById("submit-btn");
+        const successEl = document.getElementById("success-message");
+        const errorEl = document.getElementById("error-message");
 
-        document.getElementById("register-form").style.display = "block";
+        formEl.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-        document.getElementById("register-form").addEventListener("submit", async function(e) {
-          e.preventDefault();
+        successEl.style.display = "none";
+        errorEl.style.display = "none";
 
-          const payload = {
-            line_id: profile.userId,
-            name: document.getElementById("name").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-            graduate_year: document.getElementById("graduate_year").value,
-            consent_recruitment: document.getElementById("consent_recruitment").checked,
-          };
+        if (!formEl.checkValidity()) {
+          formEl.reportValidity();
+          return;
+        }
 
+        submitBtn.disabled = true;
+        submitBtn.innerText = "送出中...";
+
+        const payload = {
+          line_id: profile.userId,
+          name: document.getElementById("name").value.trim(),
+          phone: document.getElementById("phone").value.trim(),
+          email: document.getElementById("email").value.trim(),
+          graduate_year: document.getElementById("graduate_year").value.trim(),
+          consent_recruitment: document.getElementById("consent_recruitment").checked
+        };
+
+        try {
           const res = await fetch("/line/api/member/register/", {
             method: "POST",
             headers: {
@@ -76,14 +286,29 @@
           });
 
           const data = await res.json();
-          alert(data.message || "送出完成");
+
+          if (!res.ok) {
+            throw new Error(data.message || "送出失敗");
+          }
+
+          successEl.innerText = "資料已送出，感謝填寫。";
+          successEl.style.display = "block";
 
           if (liff.isInClient()) {
-            liff.closeWindow();
+            setTimeout(() => {
+              liff.closeWindow();
+            }, 1200);
           }
-        });
+        } catch (err) {
+          errorEl.innerText = err.message || "送出失敗，請稍後再試。";
+          errorEl.style.display = "block";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerText = "送出資料";
+        }
+      });
       } catch (err) {
-        document.getElementById("status").innerText = "LIFF 初始化失敗：" + err;
+        document.getElementById("status").innerText = "LIFF 初始化失敗，請稍後再試。";
       }
     }
 

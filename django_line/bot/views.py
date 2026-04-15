@@ -45,24 +45,67 @@ def member_register_api(request):
     try:
         payload = json.loads(request.body.decode("utf-8"))
     except json.JSONDecodeError:
-        return HttpResponseBadRequest("Invalid JSON")
+        return JsonResponse({
+            "status": "error",
+            "message": "資料格式錯誤"
+        }, status=400)
 
-    line_id = payload.get("line_id")
-    name = payload.get("name")
-    phone = payload.get("phone", "").strip()
-    email = payload.get("email", "").strip()
+    line_id = (payload.get("line_id") or "").strip()
+    name = (payload.get("name") or "").strip()
+    phone = (payload.get("phone") or "").strip()
+    email = (payload.get("email") or "").strip()
     graduate_year = payload.get("graduate_year")
     consent_recruitment = payload.get("consent_recruitment", False)
 
     if not line_id:
-        return HttpResponseBadRequest("Missing line_id")
+        return JsonResponse({
+            "status": "error",
+            "message": "缺少 LINE 使用者識別碼"
+        }, status=400)
 
-    graduate_year_value = None
-    if graduate_year not in [None, ""]:
-        try:
-            graduate_year_value = int(graduate_year)
-        except ValueError:
-            return HttpResponseBadRequest("graduate_year must be integer")
+    if not name:
+        return JsonResponse({
+            "status": "error",
+            "message": "請填寫姓名"
+        }, status=400)
+
+    if not phone:
+        return JsonResponse({
+            "status": "error",
+            "message": "請填寫電話"
+        }, status=400)
+
+    if not email:
+        return JsonResponse({
+            "status": "error",
+            "message": "請填寫 E-mail"
+        }, status=400)
+
+    if graduate_year in [None, ""]:
+        return JsonResponse({
+            "status": "error",
+            "message": "請填寫畢業年"
+        }, status=400)
+
+    try:
+        graduate_year_value = int(graduate_year)
+    except (TypeError, ValueError):
+        return JsonResponse({
+            "status": "error",
+            "message": "畢業年格式錯誤"
+        }, status=400)
+
+    if graduate_year_value < 2000 or graduate_year_value > 2100:
+        return JsonResponse({
+            "status": "error",
+            "message": "畢業年超出可接受範圍"
+        }, status=400)
+
+    if not consent_recruitment:
+        return JsonResponse({
+            "status": "error",
+            "message": "需同意接收徵才資訊才能送出"
+        }, status=400)
 
     MemberInfo.objects.update_or_create(
         line_id=line_id,
@@ -78,7 +121,7 @@ def member_register_api(request):
 
     return JsonResponse({
         "status": "ok",
-        "message": "資料已儲存"
+        "message": "資料已成功儲存"
     })
     
 @csrf_exempt
