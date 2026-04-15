@@ -16,6 +16,7 @@ pip install psycopg
 pip install dj-database-url==1.3.0
 pip install psycopg2
 pip install line-bot-sdk
+pip install gunicorn
 
 ### ngork步驟
 1. 環境下執行 python manage.py runserver 8000
