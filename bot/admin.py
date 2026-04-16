@@ -3,6 +3,4 @@ from .models import MemberInfo
 
 # Register your models here.
 
-@admin.register(MemberInfo)
-class MemberInfoAdmin(admin.ModelAdmin):
-    list_display = ("line_id",)
+admin.site.register(MemberInfo)
