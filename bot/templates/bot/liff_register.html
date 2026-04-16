@@ -291,14 +291,9 @@
             throw new Error(data.message || "送出失敗");
           }
 
-          successEl.innerText = "資料已送出，感謝填寫。";
+          successEl.innerText = "資料已送出，請出示本畫面給工作人員。";
           successEl.style.display = "block";
 
-          if (liff.isInClient()) {
-            setTimeout(() => {
-              liff.closeWindow();
-            }, 1200);
-          }
         } catch (err) {
           errorEl.innerText = err.message || "送出失敗，請稍後再試。";
           errorEl.style.display = "block";
