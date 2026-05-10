@@ -14,10 +14,10 @@ def post_list(request):
     )
 
 
-def post_detail(request, post_uuid):
+def post_detail(request, post_short_id):
     post = get_object_or_404(
         RecruitmentPost,
-        uuid=post_uuid,
+        short_id=post_short_id,
         is_published=True
     )
 
