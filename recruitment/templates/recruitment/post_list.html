@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>徵才資訊</title>
+</head>
+<body>
+  <h1>徵才資訊</h1>
+
+  {% for post in posts %}
+    <article>
+      <h2>
+        <a href="{% url 'recruitment:post_detail' short_id=short_id %}">
+          {{ post.title }}
+        </a>
+      </h2>
+
+      {% if post.published_at %}
+        <p>{{ post.published_at|date:"Y-m-d" }}</p>
+      {% endif %}
+    </article>
+  {% empty %}
+    <p>目前尚無徵才資訊。</p>
+  {% endfor %}
+</body>
+</html>

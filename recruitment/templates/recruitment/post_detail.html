@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ post.title }}</title>
+</head>
+<body>
+  <article>
+    <h1>{{ post.title }}</h1>
+
+    {% if post.published_at %}
+      <p>{{ post.published_at|date:"Y-m-d" }}</p>
+    {% endif %}
+
+    <div>
+      {{ post.content|safe }}
+    </div>
+  </article>
+
+  <p>
+    <a href="{% url 'recruitment:post_list' %}">返回徵才資訊列表</a>
+  </p>
+</body>
+</html>
