@@ -10,9 +10,7 @@
   {% for post in posts %}
     <article>
       <h2>
-        <a href="{% url 'recruitment:post_detail' short_id=post.short_id %}">
-          {{ post.title }}
-        </a>
+        <a href="{% url 'recruitment:post_detail' short_id=post.post_short_id %}">{{ post.title }}</a>
       </h2>
 
       {% if post.published_at %}
