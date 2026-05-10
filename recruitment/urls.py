@@ -6,5 +6,5 @@ app_name = "recruitment"
 urlpatterns = [
     path("", views.post_list, name="post_list"),
     
-    path("<str:short_id>/", views.post_detail, name="post_detail"),
+    path("<str:post_short_id>/", views.post_detail, name="post_detail"),
 ]
