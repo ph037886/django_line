@@ -47,4 +47,4 @@ class job_bank_link(models.Model):
         ordering = ["id"]
     
     def __str__(self):
-        return self.id
+        return self.job_name
