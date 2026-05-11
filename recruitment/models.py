@@ -31,3 +31,20 @@ class RecruitmentPost(models.Model):
 
     def __str__(self):
         return self.title
+    
+class job_bank_link(models.Model):
+    recruitment_post = models.ForeignKey(
+        RecruitmentPost,
+        on_delete=models.CASCADE,
+        related_name="job_bank_links"
+    )
+    id=models.AutoField(primary_key=True)
+    job_name=models.TextField(blank=False)
+    job_link=models.URLField(blank=False)
+    job_show=models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ["id"]
+    
+    def __str__(self):
+        return self.id

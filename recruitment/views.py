@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import RecruitmentPost
+from .models import RecruitmentPost, job_bank_link
 
 
 def post_list(request):
@@ -16,13 +16,16 @@ def post_list(request):
 
 def post_detail(request, post_short_id):
     post = get_object_or_404(
-        RecruitmentPost,
+        RecruitmentPost.objects.prefetch_related("job_bank_links"),
         short_id=post_short_id,
         is_published=True
     )
 
+    visible_links = post.job_bank_links.filter(job_show=True)
+    
     return render(
         request,
         "recruitment/post_detail.html",
-        {"post": post}
+        {"post": post, 
+         "visible_links": visible_links,}
     )

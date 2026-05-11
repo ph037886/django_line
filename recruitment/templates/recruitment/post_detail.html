@@ -10,9 +10,24 @@
     </div>
   </article>
   <div>
-    <h3>應徵資訊：</h3>
-    <p><a href="https://www.1111.com.tw/job/113133195" target="_blank">1111人力銀行</a></p>
-    <p><a href="https://www.104.com.tw/job/8gd8x?jobsource=index_s" target="_blank">104人力銀行</a></p>
+    <h2>應徵資訊：</h2>
+    {% if visible_links %}
+      <section class="job-links-section">
+        <h3>人力銀行連結</h3>
+
+        <div class="job-links">
+          {% for link in visible_links %}
+            <a
+              class="job-link-btn"
+              href="{{ link.job_link }}"
+              target="_blank"
+            >
+              {{ link.job_name }}
+            </a>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
     <p>電話直播：07-5817121轉2003，總藥師。</p>
   </div>
   <footer>
