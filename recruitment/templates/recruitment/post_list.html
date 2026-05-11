@@ -1,25 +1,71 @@
 {% extends "recruitment/base.html" %}
 
-{% block title %}徵才資訊列表{% endblock %}
+{% block title %}徵才資訊{% endblock %}
 
 {% block content %}
-<section class="post-grid">
-  <h1>徵才資訊</h1>
 
-  {% for post in posts %}
-    <article>
-      <h2>
-        <a href="{% url 'recruitment:post_detail' post_short_id=post.short_id %}">
-        {{ post.title }}
-        </a>
-      </h2>
+<section class="news-section">
 
-      {% if post.published_at %}
-        <p>{{ post.published_at|date:"Y-m-d" }}</p>
-      {% endif %}
-    </article>
-  {% empty %}
-    <p>目前尚無徵才資訊。</p>
-  {% endfor %}
+  <div class="news-header">
+    <h2>最新徵才資訊</h2>
+  </div>
+
+  {% if posts %}
+
+    <div class="news-table-wrapper">
+
+      <table class="news-table">
+
+        <thead>
+          <tr>
+            <th class="date-column">更新日期</th>
+            <th>標題</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for post in posts %}
+
+            <tr>
+
+              <td class="date-column">
+                {% if post.updated_at %}
+                  {{ post.updated_at|date:"Y-m-d" }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+
+              <td class="title-column">
+
+                <a
+                  class="news-link"
+                  href="{% url 'recruitment:post_detail' short_id=post.short_id %}"
+                >
+                  {{ post.title }}
+                </a>
+
+              </td>
+
+            </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  {% else %}
+
+    <div class="empty-state">
+      目前尚無徵才資訊。
+    </div>
+
+  {% endif %}
+
 </section>
+
 {% endblock %}
