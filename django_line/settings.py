@@ -82,8 +82,7 @@ WSGI_APPLICATION = 'django_line.wsgi.application'
 
 DATABASES = {
     "default": dj_database_url.parse(
-        #os.getenv("DATABASE_URL",),
-        "postgresql://neondb_owner:npg_NPhk3G2zljHJ@ep-sparkling-base-a1sld4im-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+        os.getenv("DATABASE_URL",),
         conn_max_age=600,
         ssl_require=True
     )
