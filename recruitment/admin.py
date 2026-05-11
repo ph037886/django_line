@@ -14,6 +14,6 @@ class RecruitmentPostAdmin(SummernoteModelAdmin):
 
 @admin.register(job_bank_link)
 class job_bank_link_admin(admin.ModelAdmin):
-    list_display = ("job_name", "job_link", "job_show")
+    list_display = ("job_name", "job_link", "job_show", "recruitment_post")
     search_fields = ("job_name",)
     list_filter = ('job_show',)
