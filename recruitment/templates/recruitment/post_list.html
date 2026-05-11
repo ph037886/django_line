@@ -41,7 +41,8 @@
 
                 <a
                   class="news-link"
-                  href="{% url 'recruitment:post_detail' short_id=post.short_id %}"
+                  href="{% url 'recruitment:post_detail' post_short_id=post.short_id %}"
+                  
                 >
                   {{ post.title }}
                 </a>
