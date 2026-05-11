@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <title>徵才資訊</title>
-</head>
-<body>
+{% extends "recruitment/base.html" %}
+
+{% block title %}徵才資訊列表{% endblock %}
+
+{% block content %}
+<section class="post-grid">
   <h1>徵才資訊</h1>
 
   {% for post in posts %}
@@ -22,5 +21,5 @@
   {% empty %}
     <p>目前尚無徵才資訊。</p>
   {% endfor %}
-</body>
-</html>
+</section>
+{% endblock %}

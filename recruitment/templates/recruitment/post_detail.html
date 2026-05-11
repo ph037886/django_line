@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="UTF-8">
-  <title>{{ post.title }}</title>
-</head>
-<body>
+{% extends "recruitment/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="post-detail">
   <article>
     <div>
       {{ post.content|safe }}
     </div>
   </article>
   <div>
-    <h5>應徵資訊：</h5>
+    <h3>應徵資訊：</h3>
     <p><a href="https://www.1111.com.tw/job/113133195" target="_blank">1111人力銀行</a></p>
     <p><a href="https://www.104.com.tw/job/8gd8x?jobsource=index_s" target="_blank">104人力銀行</a></p>
     <p>電話直播：07-5817121轉2003，總藥師。</p>
@@ -21,5 +20,5 @@
       <a href="{% url 'recruitment:post_list' %}">返回徵才資訊列表</a>
     </p>
   </footer>  
-</body>
-</html>
+</article>
+{% endblock %}
