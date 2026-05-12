@@ -220,6 +220,42 @@
             <input class="form-input" type="number" id="graduate_year" name="graduate_year" placeholder="例如 2026" required />
           </div>
 
+          <div class="form-group">
+            <label class="form-label" for="graduate_year">居住地 * (請選擇畢業後的居住地)</label>
+            <input class="form-input" list="where_site" id="live_site" name="live_site"/>
+            <datalist id="where_site">
+              <option value="高雄市左營區">
+              <option value="高雄市楠梓區">
+              <option value="高雄市橋頭區">
+              <option value="高雄市鼓山區">
+              <option value="高雄市三民區">
+              <option value="高雄市仁武區">
+              <option value="高雄市大社區">
+              <option value="高雄市其他區域">
+              <option value="臺南市">
+              <option value="屏東縣">
+              <option value="臺北市">
+              <option value="新北市">
+              <option value="基隆市">
+              <option value="桃園市">
+              <option value="新竹市">
+              <option value="新竹縣">
+              <option value="苗栗縣">
+              <option value="臺中市">
+              <option value="彰化縣">
+              <option value="南投縣">
+              <option value="雲林縣">
+              <option value="嘉義市">
+              <option value="嘉義縣">
+              <option value="宜蘭縣">
+              <option value="花蓮縣">
+              <option value="臺東縣">
+              <option value="澎湖縣">
+              <option value="金門縣">
+              <option value="連江縣">
+            </datalist>
+          </div>
+
           <div class="checkbox-group">
             <input type="checkbox" id="consent_recruitment" name="consent_recruitment" checked required />
             <label for="consent_recruitment">
@@ -279,7 +315,8 @@
           phone: document.getElementById("phone").value.trim(),
           email: document.getElementById("email").value.trim(),
           graduate_year: document.getElementById("graduate_year").value.trim(),
-          consent_recruitment: document.getElementById("consent_recruitment").checked
+          consent_recruitment: document.getElementById("consent_recruitment").checked,
+          live_site: document.getElementById("live_site").value.trim()
         };
 
         try {

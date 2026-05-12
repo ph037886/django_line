@@ -56,6 +56,7 @@ def member_register_api(request):
     email = (payload.get("email") or "").strip()
     graduate_year = payload.get("graduate_year")
     consent_recruitment = payload.get("consent_recruitment", False)
+    live_site = (payload.get("live_site") or "").strip()
 
     if not line_id:
         return JsonResponse({
@@ -106,6 +107,12 @@ def member_register_api(request):
             "status": "error",
             "message": "需同意接收徵才資訊才能送出"
         }, status=400)
+        
+    if not live_site:
+        return JsonResponse({
+            "status": "error",
+            "message": "居住地"
+        }, status=400)
 
     MemberInfo.objects.update_or_create(
         line_id=line_id,
@@ -116,6 +123,7 @@ def member_register_api(request):
             "graduate_year": graduate_year_value,
             "consent_recruitment": consent_recruitment,
             "is_blocked": False,
+            "live_site": live_site,
         }
     )
 
