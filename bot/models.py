@@ -23,16 +23,9 @@ class MemberInfo(models.Model):
         
 class RecruitmentEvent(models.Model):
     event_id=models.AutoField(primary_key=True)
-    #event_date=models.DateField(blank=False)
-    event_date=models.ForeignKey(
-        MemberInfo,
-        on_delete=models.CASCADE
-    )
+    event_date=models.DateField(blank=False)
     event_name=models.CharField(max_length=50, blank=False)
     
-    @property
-    def parent_date(self):
-        return self.event_date.timestamp.date()
     
     def __str__(self):
         return self.event_name
