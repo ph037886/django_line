@@ -185,6 +185,26 @@
       font-weight: bold;
       text-align: center;
     }
+
+    .form-select {
+      width: 100%;
+      height: 46px;
+      padding: 10px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+      background: #fff;
+      color: #111827;
+      appearance: auto;
+    }
+
+    .form-select:focus {
+      border-color: #2563eb;
+      box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
   </style>
 </head>
 <body>
@@ -221,39 +241,39 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="graduate_year">居住地 * (請選擇畢業後的居住地)</label>
-            <input class="form-input" list="where_site" id="live_site" name="live_site"/>
-            <datalist id="where_site">
-              <option value="高雄市左營區">
-              <option value="高雄市楠梓區">
-              <option value="高雄市橋頭區">
-              <option value="高雄市鼓山區">
-              <option value="高雄市三民區">
-              <option value="高雄市仁武區">
-              <option value="高雄市大社區">
-              <option value="高雄市其他區域">
-              <option value="臺南市">
-              <option value="屏東縣">
-              <option value="臺北市">
-              <option value="新北市">
-              <option value="基隆市">
-              <option value="桃園市">
-              <option value="新竹市">
-              <option value="新竹縣">
-              <option value="苗栗縣">
-              <option value="臺中市">
-              <option value="彰化縣">
-              <option value="南投縣">
-              <option value="雲林縣">
-              <option value="嘉義市">
-              <option value="嘉義縣">
-              <option value="宜蘭縣">
-              <option value="花蓮縣">
-              <option value="臺東縣">
-              <option value="澎湖縣">
-              <option value="金門縣">
-              <option value="連江縣">
-            </datalist>
+            <label class="form-label" for="live_site">居住地 * (請選擇畢業後的居住地)</label>
+            <select class="form-select" id="live_site" name="live_site" required>
+              <option value="">請選擇</option>
+              <option value="高雄市左營區">高雄市左營區</option>
+              <option value="高雄市楠梓區">高雄市楠梓區</option>
+              <option value="高雄市橋頭區">高雄市橋頭區</option>
+              <option value="高雄市鼓山區">高雄市鼓山區</option>
+              <option value="高雄市三民區">高雄市三民區</option>
+              <option value="高雄市仁武區">高雄市仁武區</option>
+              <option value="高雄市大社區">高雄市大社區</option>
+              <option value="高雄市其他區域">高雄市其他區域</option>
+              <option value="臺南市">臺南市</option>
+              <option value="屏東縣">屏東縣</option>
+              <option value="臺北市">臺北市</option>
+              <option value="新北市">新北市</option>
+              <option value="基隆市">基隆市</option>
+              <option value="桃園市">桃園市</option>
+              <option value="新竹市">新竹市</option>
+              <option value="新竹縣">新竹縣</option>
+              <option value="苗栗縣">苗栗縣</option>
+              <option value="臺中市">臺中市</option>
+              <option value="彰化縣">彰化縣</option>
+              <option value="南投縣">南投縣</option>
+              <option value="雲林縣">雲林縣</option>
+              <option value="嘉義市">嘉義市</option>
+              <option value="嘉義縣">嘉義縣</option>
+              <option value="宜蘭縣">宜蘭縣</option>
+              <option value="花蓮縣">花蓮縣</option>
+              <option value="臺東縣">臺東縣</option>
+              <option value="澎湖縣">澎湖縣</option>
+              <option value="金門縣">金門縣</option>
+              <option value="連江縣">連江縣</option>
+            </select>
           </div>
 
           <div class="checkbox-group">
