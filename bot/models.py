@@ -15,6 +15,8 @@ class MemberInfo(models.Model):
     line_display_name = models.CharField(max_length=100, blank=True) #line顯示名稱
     consent_recruitment = models.BooleanField(default=False) #是否願意接受徵才訊息
     live_site=models.CharField(max_length=20, blank=True) #居住地
+    have_license = models.BooleanField(default=False) #考上執照了嗎
+    note = models.CharField(blank=True) #備註或筆記
     def __str__(self):
         return self.line_id
 
