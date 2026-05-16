@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'bot',
     'recruitment',
     'django_summernote',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
