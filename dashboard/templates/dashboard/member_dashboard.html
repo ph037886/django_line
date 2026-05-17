@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>徵才名單後台</title>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+
+  <style>
+    body {
+      font-family: "Noto Sans TC", "Microsoft JhengHei", Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 32px;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .summary {
+      margin-bottom: 20px;
+      color: #64748b;
+    }
+
+    table.dataTable {
+      width: 100% !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>徵才名單後台</h1>
+    <div class="summary">目前共 {{ count }} 筆資料</div>
+
+    {% if table_html %}
+      {{ table_html|safe }}
+    {% else %}
+      <p>目前尚無資料。</p>
+    {% endif %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#memberTable').DataTable({
+        pageLength: 25,
+        order: [[7, 'desc']],
+        language: {
+          search: "搜尋：",
+          lengthMenu: "每頁顯示 _MENU_ 筆",
+          info: "顯示第 _START_ 到 _END_ 筆，共 _TOTAL_ 筆",
+          paginate: {
+            first: "第一頁",
+            last: "最後一頁",
+            next: "下一頁",
+            previous: "上一頁"
+          },
+          zeroRecords: "找不到符合的資料"
+        }
+      });
+    });
+  </script>
+</body>
+</html>
