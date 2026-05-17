@@ -3,7 +3,7 @@ import pandas as pd
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 
-from bot.models import MemberInfo
+from bot.models import MemberInfo, RecruitmentEvent
 
 
 @staff_member_required
@@ -23,18 +23,22 @@ def member_dashboard(request):
 
     df = pd.DataFrame(list(qs))
 
+    df=df[df["consent_recruitment"]==True]
+    df=df[df["is_blocked"]==False]
+    
+    qs2=RecruitmentEvent.objects.all().values(
+        'event_date',
+        'event_name'
+    )
+    
+    event_date=pd.DataFrame(list(qs2))
+    
+    
     if not df.empty:
-        df["consent_recruitment"] = df["consent_recruitment"].map({
-            True: "同意",
-            False: "不同意"
-        })
-
-        df["is_blocked"] = df["is_blocked"].map({
-            True: "已封鎖",
-            False: "可推播"
-        })
-
         df["created_at"] = pd.to_datetime(df["created_at"]).dt.strftime("%Y-%m-%d")
+        event_date['event_date']= pd.to_datetime(event_date["event_date"]).dt.strftime("%Y-%m-%d")
+        
+        df=pd.merge(df,event_date,how='left',left_on='created_at',right_on='event_date',)
 
         df = df.rename(columns={
             "name": "姓名",
@@ -42,11 +46,10 @@ def member_dashboard(request):
             "email": "E-mail",
             "graduate_year": "畢業年",
             "live_site": "居住地",
-            "consent_recruitment": "接收徵才資訊",
-            "is_blocked": "LINE狀態",
             "created_at": "建立時間",
             "have_license": "已考上執照",
             "note": '備註',
+            'event_name': '徵才活動名稱',
         })
 
         display_columns = [
@@ -55,11 +58,10 @@ def member_dashboard(request):
             "E-mail",
             "畢業年",
             "居住地",
-            "接收徵才資訊",
-            "LINE狀態",
             "建立時間",
             "已考上執照",
             '備註',
+            '徵才活動名稱',
         ]
 
         df = df[display_columns]
