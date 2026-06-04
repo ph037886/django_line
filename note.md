@@ -2,7 +2,6 @@
 
 ### 常用cmd語法
 啟動環境 C:\python\env\django_work\Scripts\activate.bat
-cd django_line
 
 ### 啟動網頁
 python manage.py runserver
