@@ -32,11 +32,14 @@ class ItemPackage(models.Model): #單位包裝藥品含量，讓前台可以計�
     
     
 class InventorySession(models.Model): #盤點批次，session_
-    session_id = models.AutoField(primary_key=True)
-    session_name = models.CharField(max_length=50)
-    session_yearmonth = models.IntegerField()
-    session_is_active = models.BooleanField(default=True)
-    session_created_at = models.DateTimeField(auto_now_add=True)
+    session_id = models.AutoField(primary_key=True, help_text='序號，自動ID')
+    session_name = models.CharField(max_length=50, help_text='盤點活動名稱，建議輸入民國年月，方便辨識，如：115年6月')
+    session_yearmonth = models.IntegerField(help_text='盤點年月，民國年，EX：11501')
+    session_is_active = models.BooleanField(default=True, help_text='活動是否啟用')
+    session_created_at = models.DateTimeField(auto_now_add=True, help_text='盤點活動創造日期')
+    
+    def __str__(self):
+        return self.session_name
 
 class NeedInventoryMonth(models.Model): #每月需盤點品項，每月匯入，nim_
     nim_id=models.AutoField(primary_key=True, help_text='序號，自動ID')
